@@ -37,7 +37,15 @@ init_scan_no    = 10; %to read all the first 'init_scan_no' scans
 %% to check if adding scans is successful
 tic
 for i=1:init_scan_no
-    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scan{i});
+    
+    if i == 1
+        relPose = zeros(3,1);
+        prev_i  = i;
+    else
+        relPose = findRelPose(pose(prev_i,:)', pose(i,:)');
+        prev_i  = i;
+    end
+    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scan{i},relPose);
     if isScanAccepted
         fprintf('Added scan %d \n', i);
     end
@@ -55,7 +63,16 @@ fprintf('\nCounter: ')
 figure;
 tic
 for i=init_scan_no:scanStep :length(scan)
-    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scan{i});
+    
+    if i == 1
+        relPose = zeros(3,1);
+        prev_i  = i;
+    else
+        relPose = findRelPose(pose(prev_i,:)', pose(i,:)');
+        prev_i  = i;
+    end
+    
+    [isScanAccepted, loopClosureInfo, optimizationInfo] = addScan(slamAlg, scan{i}, relPose);
     if ~isScanAccepted
         continue;
     end
