@@ -64,7 +64,7 @@ figure;
 tic
 for i=init_scan_no:scanStep :length(scan)
     
-    if i == 1
+    if i == 1 
         relPose = zeros(3,1);
         prev_i  = i;
     else
@@ -108,54 +108,5 @@ figure
 show(slamAlg);
 title({'Final Built Map of the Environment', 'Trajectory of the Robot'});
 
-% %% Build Occupancy Grid Map
-% 
-% [scans, optimizedPoses]  = scansAndPoses(slamAlg);
-% map = buildMap(scans, optimizedPoses, mapResolution, maxLidarRange);
-% 
-% %% Display occupancy grid
-% figure;
-% show(map);
-% hold on
-% show(slamAlg.PoseGraph, 'IDs', 'off');
-% hold off
-% title('Occupancy Grid Map Built Using Lidar SLAM');
-% 
-% %% Pose error calculation
-% 
-% 
-% load(['truepose' num2str(testnum)]);
-% 
-% %initial pose (to be changed according to test data)
-% init_x = 5;
-% init_y = 20;
-% init_th = 0;
-% 
-% %Commpute error and plot
-% compute_Error_plot;
-% 
-% 
-% %% Store test run specifications
-% 
-% exp_no = 6;         % change according to experiment
-% 
-% testRun_data.initscan = init_scan_no;
-% testRun_data.scanstep = scanStep;
-% testRun_data.maxLidarRange = maxLidarRange;
-% testRun_data.mapResol = mapResolution;
-% testRun_data.SlamTime = elapTimeTotal;
-% testRun_data.ErrorMean = pose_error_mean;
-% testRun_data.ErrorVar = pose_error_var;
-% 
-% testdata_spec = {slamAlg,testRun_data};
-% 
-% save(['test_spec' num2str(exp_no)],'testdata_spec')
-% 
-% 
-% %% To analyze the lidar scan according to scanID
-% nodeIDs=2;
-% [scansID,posesID] = scansAndPoses(slamAlg,nodeIDs);
-% figure;
-% polarplot(scansID{1}.Angles,scansID{1}.Ranges,'.');
 
 
